@@ -54,14 +54,14 @@ public class Main extends PApplet {
 
     public void draw() {
         fancyBackground();
-        for (int i = 0; i < panels.size(); i++) {
-            panels.get(i).display();
+        for (Panel num : panels) {
+            num.display();
         }
     }
 
     public void mouseClicked() {
-        for (int i = 0; i < panels.size(); i++) {
-            panels.get(i).handleMouseClicked(mouseX, mouseY);
+        for (Panel num : panels) {
+            num.handleMouseClicked(mouseX, mouseY);
         }
     }
 
