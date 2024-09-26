@@ -1,10 +1,11 @@
 import processing.core.PApplet;
+import java.util.ArrayList;
 
 public class Main extends PApplet {
-    private final int vertical = 5;
-    private final int horizontal = 4;
-    private Panel[] panels;
     public static PApplet app;
+    final int vertical = 5;
+    final int horizontal = 4;
+    private ArrayList<Panel> panels = new ArrayList<Panel>(horizontal * vertical);
 
     public static void main(String[] args) {
         //String[] processingArgs = {"Image Processing Migration Project"};
@@ -23,7 +24,6 @@ public class Main extends PApplet {
     }
 
     public void setup() {
-        panels = new Panel[horizontal * vertical];
         int h = height / vertical;
         int w = width / horizontal;
         int index = 0;
@@ -46,7 +46,7 @@ public class Main extends PApplet {
                 }
 
                 p.setupImage("data/frog.png");
-                panels[index] = p;
+                panels.add(p);
                 index++;
             }
         }
@@ -54,18 +54,51 @@ public class Main extends PApplet {
 
     public void draw() {
         fancyBackground();
-        for (int i = 0; i < panels.length; i++) {
-            panels[i].display();
+        for (int i = 0; i < panels.size(); i++) {
+            panels.get(i).display();
         }
     }
 
     public void mouseClicked() {
-        for (int i = 0; i < panels.length; i++) {
-            panels[i].handleMouseClicked(mouseX, mouseY);
+        for (int i = 0; i < panels.size(); i++) {
+            panels.get(i).handleMouseClicked(mouseX, mouseY);
         }
     }
 
-    private void fancyBackground() {
+    public void keyPressed() {
+        if (key == 's') {
+            System.out.println("key s is pressed");
+            Panel first = panels.getFirst();
+            Panel last = panels.getLast();
+            panels.set(0, last);
+            panels.set(panels.size() - 1, first);
+            int tempX = first.getX();
+            int tempY = first.getY();
+            first.setX(last.getX());
+            first.setY(last.getY());
+            last.setX(tempX);
+            last.setY(tempY);
+        }
+        if (key == 'r') {
+            System.out.println("key r is pressed");
+            int index = (int) random(0, panels.size() - 1);
+            if (!(panels.get(index) instanceof ContrastedPanel)){
+                int xx = panels.get(index).getX();
+                int yy = panels.get(index).getY();
+                Panel a = new ContrastedPanel(xx, yy, width / horizontal, height / vertical);
+                a.setupImage("data/frog.png");
+                panels.set(index, a);
+            } else {
+                int xx = panels.get(index).getX();
+                int yy = panels.get(index).getY();
+                Panel a = new CustomPanel(xx, yy, width / horizontal, height / vertical);
+                a.setupImage("data/frog.png");
+                panels.set(index, a);
+            }
+        }
+    }
+
+    public void fancyBackground() {
         loadPixels();
 
         for (int x = 0; x < width; x++) {
@@ -80,6 +113,6 @@ public class Main extends PApplet {
         }
 
         updatePixels();
-    }
 
+    }
 }
