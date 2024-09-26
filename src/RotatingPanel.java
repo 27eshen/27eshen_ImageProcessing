@@ -13,6 +13,7 @@ public class RotatingPanel extends Panel {
     }
 
     public void display() {
+        Main.app.tint(100, 200, 200);
         if (!rotating) {
             super.display();
         } else {
@@ -33,6 +34,7 @@ public class RotatingPanel extends Panel {
             Main.app.imageMode(CORNER);
             Main.app.pop();
         }
+        Main.app.noTint();
     }
 
     public void handleMouseClicked(int _mx, int _my) {

@@ -34,13 +34,13 @@ public class Main extends PApplet {
                 int x = j * w;
                 int y = i * h;
                 if (i % 5 == 0) {
-                    p = new Panel(x, y, w, h);
+                    p = new ContrastedPanel(x, y, w, h);
                 } else if (i % 5 == 1) {
                     p = new TintedPanel(x, y, w, h);
                 } else if (i % 5 == 2) {
-                    p = new RotatingPanel(x, y, w, h);
+                    p = new Panel(x, y, w, h);
                 } else if (i % 5 == 3) {
-                    p = new ContrastedPanel(x, y, w, h);
+                    p = new RotatingPanel(x, y, w, h);
                 } else {
                     p = new CustomPanel(x, y, w, h);
                 }
